@@ -11,6 +11,12 @@ import javax.xml.crypto.Data;
 public class GenreDao {
 	
 	String dbUrl = "jdbc:sqlite:sqlite.db";
+
+	/**
+	 * Retrieves a list of all genres from the database.
+	 *
+	 * @return a list of Genre objects representing the genres in the database
+	 */
 	public List<Genre> listGenres() {
 		List<Genre> listOfGeneres = new ArrayList<>();
 		try (Connection connection = DriverManager.getConnection(dbUrl)) {
@@ -32,6 +38,12 @@ public class GenreDao {
 		return listOfGeneres;
 	}
 
+	/**
+	 * Retrieves a genre from the database based on the given name.
+	 *
+	 * @param name the name of the genre to retrieve
+	 * @return a Genre object representing the genre with the given name, or null if not found
+	 */
 	public Genre getGenre(String name) {
 		try (Connection connection = DriverManager.getConnection(dbUrl)) {
 			try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM genre WHERE name=?")) {
@@ -51,6 +63,12 @@ public class GenreDao {
 		return null;
 	}
 
+	/**
+	 * Retrieves a genre from the database based on the given ID.
+	 *
+	 * @param id the ID of the genre to retrieve
+	 * @return a Genre object representing the genre with the given ID, or null if not found
+	 */
 	public Genre getGenreById(Integer id) {
 		try (Connection connection = DriverManager.getConnection(dbUrl)) {
 			try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM genre WHERE idgenre=?")) {
@@ -71,6 +89,11 @@ public class GenreDao {
 		return null;
 	}
 
+	/**
+	 * Adds a new genre to the database with the given name.
+	 *
+	 * @param name the name of the genre to add
+	 */
 	public void addGenre(String name) {
 		try (Connection connection = DriverManager.getConnection(dbUrl)) {
 			String sqlQuery = "INSERT INTO genre(name) " + "VALUES(?)";

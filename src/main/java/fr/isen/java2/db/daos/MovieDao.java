@@ -17,6 +17,11 @@ public class MovieDao {
 
 	GenreDao genreDao = new GenreDao();
 
+	/**
+	 * Retrieves a list of all movies from the database.
+	 *
+	 * @return a list of Movie objects representing the movies in the database
+	 */
 	public List<Movie> listMovies() {
 		List<Movie> listOfMovies = new ArrayList<>();
 
@@ -52,6 +57,12 @@ public class MovieDao {
 		return listOfMovies;
 	}
 
+	/**
+	 * Retrieves a list of movies from the database that belong to the specified genre.
+	 *
+	 * @param genreName the name of the genre to filter movies by
+	 * @return a list of Movie objects representing the movies belonging to the specified genre
+	 */
 	public List<Movie> listMoviesByGenre(String genreName) {
 		List<Movie> listOfMovies = new ArrayList<>();
 		try (Connection connection = DriverManager.getConnection(dbUrl)) {
@@ -82,6 +93,12 @@ public class MovieDao {
 		return listOfMovies;
 	}
 
+	/**
+	 * Adds a new movie to the database.
+	 *
+	 * @param movie the Movie object representing the movie to add
+	 * @return the Movie object representing the added movie, or null if the operation failed
+	 */
 	public Movie addMovie(Movie movie) {
 		Movie newMovie = new Movie();
 		try (Connection connection = DriverManager.getConnection(dbUrl)) {
@@ -100,7 +117,7 @@ public class MovieDao {
 				try (ResultSet ids = statement.getGeneratedKeys()) {
 					if (ids.next()) {
 						int generatedId = ids.getInt(1);
-						movie.setId(generatedId);
+						movie.setId(generatedId);	// Sets the generated key as the id of the movie object from given in the function parameters.
 						newMovie.setId(generatedId);
 						newMovie.setTitle(movie.getTitle());
 						newMovie.setReleaseDate(movie.getReleaseDate());
